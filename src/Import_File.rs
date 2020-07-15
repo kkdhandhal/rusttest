@@ -1,4 +1,3 @@
-use std::iter::FromIterator;
 pub struct MstLdg{
         month:u8,
         year:u16,
@@ -81,14 +80,24 @@ pub struct MstLdg{
 
 fn parse_data(line:String) -> MstLdg{
 	let token:Vec<String>= line.split("|").map(|s| s.to_string()).collect();
-	let mut mstldg: = MstLdg{
-		month : token[0].parse().unwrap(),
-		year : token[0].parse().unwrap(),
-	};
+	let mut mstldg:MstLdg = MstLdg{
+		month : match token[0].parse() {
+			Ok(n) => n,
+			Err(e) => {0},
+		},
+		//assert_eq!(mstldg.month.is_ascii_digit())
+		year : match token[1].parse() {
+			Ok(n) => n,
+			Err(e) => {0},
+		},
+	}; 
+	
+	
 	
 	return  mstldg;
 }
 pub fn insert_data(line:String){
+	//println!("{}",line);
 	let mstldg1 = parse_data(line);
 	println!("Month Is {} and year is {}", mstldg1.month,mstldg1.year);
 }
